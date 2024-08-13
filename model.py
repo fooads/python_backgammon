@@ -1,28 +1,6 @@
-class Ball:
-
-    def __init__(self, start_x, start_y):
-        self.x = start_x
-        self.y = start_y
-        self.clicked = False
-
-    def move(self, coordinates):
-        self.x = coordinates[0]
-        self.y = coordinates[1]
-
-    def set_clicked(self):
-        self.clicked = True
-
-    def set_unclicked(self):
-        self.clicked = False
-
-
-
-
-
-
-
 from typing import Literal
 from random import randint
+
 
 class Piece:
     def __init__(self, color: Literal['white', 'black']):
@@ -33,6 +11,7 @@ class Piece:
             return "○"
         elif self.color == "black":
             return "●"
+
 
 class Stack:
     def __init__(self):
@@ -83,7 +62,6 @@ class Board:
             self.positions[0].push(Piece('white'))
             self.positions[12].push(Piece('black'))
 
-
     def __repr__(self):
         return str(self.positions)
 
@@ -99,4 +77,3 @@ class Board:
     def check_move(self, source, destination):
         if not self.positions[source].peek():
             print("invalid move")
-
