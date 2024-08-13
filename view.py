@@ -1,43 +1,25 @@
 import pygame
-# from main import SCREEN
 
 
-class PiecesView:
-    pieces = []
+class BoardView:
 
-    def __init__(self, models, screen):
-        self.screen = screen
-        for i in models:
-            self.pieces.append(BallView(i, self.screen))
-
-    def draw(self):
-        for i in range(len(self.pieces)):
-            pygame.draw.rect(self.screen, (255, 0, 0), self.pieces[i].return_rect())
-    #
-    # def check_clicked(self, piece_number):
-    #     return self.pieces[piece_number].clicked
-
-
-class BallView:
-
-    def __init__(self, model, screen):
-        self.model = model
+    def __init__(self, board, screen):
+        self.board = board
         self.screen = screen
 
-    def return_rect(self):
-        return pygame.Rect((self.model.x, self.model.y, 25, 25))
+    rank_x_coordinates = (556, 515, 473, 430, 390, 347, 250, 209, 167, 124, 84, 41)
+    colors = {
+        "white": (255, 255, 255),
+        "black": (0, 0, 0)
+    }
 
     def draw(self):
-        pygame.draw.rect(self.screen, (255, 0, 0), self.return_rect())
+        for i in range(len(self.board.positions)):
+            for j in range(len(self.board.positions[i])):
+                if i < 12:
+                    piece = pygame.Rect((self.rank_x_coordinates[i], 35 + 20 * j, 15, 15))
+                    pygame.draw.rect(self.screen, self.colors[self.board.positions[i][j].color], piece)
+                else:
+                    piece = pygame.Rect((self.rank_x_coordinates[-(i-11)], 505 - 20 * j, 15, 15))
+                    pygame.draw.rect(self.screen, self.colors[self.board.positions[i][j].color], piece)
 
-    def send_to_model(self, x, y):
-        self.model.move((x, y))
-
-    def check_clicked(self):
-        return self.model.clicked
-
-    def set_clicked(self):
-        self.model.clicked = True
-
-    def set_unclicked(self):
-        self.model.clicked = False

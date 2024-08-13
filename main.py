@@ -1,10 +1,10 @@
 import pygame
-from view import BallView, PiecesView
-from controller import PiecesController
-from model import Ball
+from view import BoardView
+from controller import BoardController
+from model import Board
 from winsetup import setup_window
 
-from init_board import Board
+
 
 pygame.init()
 
@@ -19,12 +19,13 @@ clock = pygame.time.Clock()
 
 pieces = []
 board = Board()
-for i in range(15):
-    pieces.append(Ball(400, 40*i))
+board_view = BoardView(board, SCREEN)
+board_controller = BoardController(board)
 
-pieces_view = PiecesView(pieces, SCREEN)
 
-pieces_controller = PiecesController(pieces_view)
+# pieces_view = PiecesView(pieces, SCREEN)
+
+# pieces_controller = PiecesController(pieces_view)
 
 loop_running = True
 while loop_running:
@@ -32,14 +33,13 @@ while loop_running:
     setup_window(SCREEN)
 # ----------------------------------------------------
 
+    board_view.draw()
+    board_controller.handle_events()
 
 
-    pieces_controller.handle_events()
 
-
-    pieces_view.draw()
-
-    loop_running = pieces_controller.should_run
+    #
+    loop_running = board_controller.should_run
 
     pygame.display.update()
 
