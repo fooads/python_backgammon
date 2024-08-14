@@ -17,9 +17,10 @@ class BoardView:
         for i in range(len(self.board.positions)):
             for j in range(len(self.board.positions[i])):
                 if i < 12:
-                    piece = pygame.Rect((self._rank_x_coordinates[i], 35 + 20 * j, 15, 15))
-                    pygame.draw.rect(self.screen, self._colors[self.board.positions[i][j].color], piece)
+                    piece_img = pygame.image.load("./backgammon/src/white_piece.png")
+                    piece_img = pygame.transform.scale(piece_img, (20, 20))
+                    self.screen.blit(piece_img, (self._rank_x_coordinates[i], 35 + 22 * j))
                 else:
-                    piece = pygame.Rect((self._rank_x_coordinates[-(i-11)], 505 - 20 * j, 15, 15))
-                    pygame.draw.rect(self.screen, self._colors[self.board.positions[i][j].color], piece)
-
+                    piece_img = pygame.image.load("./backgammon/src/black_piece.png")
+                    piece_img = pygame.transform.scale(piece_img, (20, 20))
+                    self.screen.blit(piece_img, (self._rank_x_coordinates[-(i-11)], 505 - 20 * j))
