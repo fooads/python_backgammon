@@ -59,10 +59,21 @@ class BoardController:
                 return 23
 
     def handle_events(self):
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.should_run = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 position = pygame.mouse.get_pos()
-                print(self._match_mouse_position_to_flank(position))
+
+                if self.board_model.piece_selected:
+                    self.board_model.destination = self._match_mouse_position_to_flank(position)
+                    self.board_model.move_piece(self.board_model.source, self.board_model.destination)
+                    self.board_model.piece_selected = False
+                    self.board_model.source = None
+                    self.board_model.destination = None
+
+                else:
+                    self.board_model.source = self._match_mouse_position_to_flank(position)
+                    self.board_model.piece_selected = True

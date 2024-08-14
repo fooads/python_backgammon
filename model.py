@@ -52,6 +52,10 @@ class Board:
     die2 = None
     turn: Literal['white', 'black'] = 'white'
 
+    piece_selected = False
+    source = None
+    destination = None
+
     def __init__(self):
 
         for i in range(24):
