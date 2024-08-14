@@ -1,13 +1,14 @@
 import pygame
+from model import Board
 
 
 class BoardController:
-    should_run = True
+    should_run: bool = True
 
-    def __init__(self, board_model):
+    def __init__(self, board_model: Board):
         self.board_model = board_model
 
-    def _match_mouse_position_to_flank(self, position):
+    def _match_mouse_position_to_flank(self, position: tuple[int, int]) -> int:
         match position:
             case (x, y) if 542 < x < 584 and 28 < y < 282:
                 return 0
@@ -58,7 +59,7 @@ class BoardController:
             case (x, y) if 542 < x < 584 and 282 < y < 525:
                 return 23
 
-    def handle_events(self):
+    def handle_events(self) -> None:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -67,13 +68,17 @@ class BoardController:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 position = pygame.mouse.get_pos()
 
-                if self.board_model.piece_selected:
-                    self.board_model.destination = self._match_mouse_position_to_flank(position)
-                    self.board_model.move_piece(self.board_model.source, self.board_model.destination)
-                    self.board_model.piece_selected = False
-                    self.board_model.source = None
-                    self.board_model.destination = None
+                flank_selected = self._match_mouse_position_to_flank(position)
 
+                if flank_selected is not None:
+                    if self.board_model.piece_selected:
+                        self.board_model.destination = flank_selected
+                        self.board_model.move_piece(self.board_model.source, self.board_model.destination)
+                        self.board_model.clear_piece_selection()
+                    else:
+                        self.board_model.source = flank_selected
+                        self.board_model.piece_selected = True
                 else:
-                    self.board_model.source = self._match_mouse_position_to_flank(position)
-                    self.board_model.piece_selected = True
+                    self.board_model.clear_piece_selection()
+
+                print(self.board_model)

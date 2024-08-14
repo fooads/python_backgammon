@@ -75,9 +75,17 @@ class Board:
         print(f"{self.turn} got {self.die1} and {self.die2}")
 
     def move_piece(self, source, destination):
-        self.positions[source].pop()
-        self.positions[destination].push(Piece(self.turn))
+        if self.is_move_valid(source, destination):
+            piece = self.positions[source].pop()
+            self.positions[destination].push(Piece(piece.color))
 
-    def check_move(self, source, destination):
+    def is_move_valid(self, source, destination):
         if not self.positions[source].peek():
             print("invalid move")
+            return False
+        return True
+
+    def clear_piece_selection(self):
+        self.piece_selected = False
+        self.source = None
+        self.destination = None
