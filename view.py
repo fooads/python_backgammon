@@ -9,8 +9,8 @@ class BoardView:
 
     _rank_x_coordinates = (556, 515, 473, 430, 390, 347, 250, 209, 167, 124, 84, 41)
     _colors = {
-        "white": "./backgammon/src/white_piece.png",
-        "black": "./backgammon/src/black_piece.png"
+        "white": "./src/white_piece.png",
+        "black": "./src/black_piece.png"
     }
 
     def draw(self):
